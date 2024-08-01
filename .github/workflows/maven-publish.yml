@@ -1,0 +1,41 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: Maven Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: Decode GPG private key
+      run: |
+        echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 --decode > private-key.asc
+        gpg --import private-key.asc
+
+    - name: Publish to Maven Central
+      env:
+        GPG_PASS_PHRASE: ${{ secrets.GPG_PASS_PHRASE }}
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      run: mvn deploy --settings .github/maven-settings.xml
