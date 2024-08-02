@@ -3,17 +3,43 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dojidomal</groupId>
+    <groupId>io.github.dojidomal</groupId>
     <artifactId>caps-lock-java</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>caps-lock-java</name>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+     <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Anderson Araujo Macedo</name>
+            <email>anderson.amacedo@dataprev.gov.br</email>
+        </developer>
+    </developers>
+        
+    <scm>
+        <connection>scm:git:git://github.com/dojiDoMal/caps-lock-java.git</connection>
+        <developerConnection>scm:git:ssh://github.com:dojiDoMal/caps-lock-java.git</developerConnection>
+        <url>http://github.com/dojiDoMal/caps-lock-java/tree/master</url>
+    </scm>
+
+     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <!-- jnativehook dependency -->
@@ -48,7 +74,22 @@
                 <configuration>
                     <publishingServerId>central</publishingServerId>
                 </configuration>
-            </plugin>           
+            </plugin>    
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>       
                  
         </plugins>
     </build>
