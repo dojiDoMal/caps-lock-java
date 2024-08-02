@@ -74,9 +74,20 @@
                 <configuration>
                     <publishingServerId>central</publishingServerId>
                 </configuration>
-            </plugin>
+            </plugin>           
                  
         </plugins>
+
+        <distributionManagement>
+            <repository>
+                <id>ossrh</id>
+                <url>https://repo.maven.apache.org/maven2</url>
+            </repository>
+            <snapshotRepository>
+                <id>ossrh</id>
+                <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            </snapshotRepository>
+        </distributionManagement>
     </build>
     
 </project>
